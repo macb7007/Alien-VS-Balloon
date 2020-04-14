@@ -11,6 +11,7 @@ TagManager:
   - ShowOnPause
   - ShowOnPlay
   - ShowOnFinish
+  - ShowOnWin
   layers:
   - Default
   - TransparentFX

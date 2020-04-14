@@ -11,27 +11,28 @@ public class Score : MonoBehaviour
     void Start()
     {
         score = GetComponent<Text>();
+        InvokeRepeating("DeductPoints", 10f, 10f);
     }
 
     void Update()
     {
-        
-        if(TimeCounter.time > 0)
-        {
-            if(TimeCounter.time == 10)
-            {
-                points -= 5;
-            }
-            else if(TimeCounter.time % 10 == 0)
-            {
-                points -= 5;
-            }
-        }
         score.text = "Helium: " + points;
     }
 
     public static void AddPoints(int pts)
     {
         points += pts;
+    }
+
+    public void DeductPoints()
+    {
+        if ((int)TimeCounter.seconds == 10)
+        {
+            points -= 5;
+        }
+        else if ((int)TimeCounter.seconds % 10 == 0)
+        {
+            points -= 5;
+        }
     }
 }

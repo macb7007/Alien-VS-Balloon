@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     GameObject[] pauseObjects;
     GameObject[] finishObjects;
     GameObject[] playObject;
+    GameObject winObject;
     
     void Start()
     {
@@ -14,8 +15,10 @@ public class UIManager : MonoBehaviour
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         finishObjects = GameObject.FindGameObjectsWithTag("ShowOnFinish");
         playObject = GameObject.FindGameObjectsWithTag("ShowOnPlay");
+        winObject = GameObject.FindGameObjectWithTag("ShowOnWin");
         hidePaused();
         hideFinished();
+        hideWon();
     }
 
     private void Update()
@@ -33,10 +36,16 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        if(Score.points <= 0 && Time.time >= 10)
+        if(Score.points <= 0 && (int)TimeCounter.seconds >= 10)
         {
             showFinished();
             Score.points = 0;
+        }
+
+        if(Score.points >= 500)
+        {
+            Time.timeScale = 0;
+            showWon();
         }
     }
     public void Reload()
@@ -106,10 +115,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void showWon()
+    {
+        winObject.SetActive(true);
+    }
+
+    public void hideWon()
+    {
+        winObject.SetActive(false);
+    }
+
     public void LoadLevel(string level)
     {
         Application.LoadLevel(level);
         Score.points = 0;
-        //hideFinished();
     }
 }
